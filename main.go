@@ -9,13 +9,15 @@ import (
 )
 
 const (
-	rohalyky            = 50
+	rohalyky            = 10
 	rohalykyPerQuestion = 5
 )
 
 var id uint64 = 1
 
 func main() {
+	var users []domain.User
+
 	fmt.Println("Вітаємо у грі \"РОГАЛИКИ\"")
 	time.Sleep(1 * time.Second)
 
@@ -26,9 +28,16 @@ func main() {
 
 		switch punct {
 		case "1":
-			play()
+			u := play()
+			users = append(users, u)
 		case "2":
-			fmt.Println("Рейтинг ще не завезли!")
+			fmt.Println("Список гравців:")
+			for _, user := range users {
+				fmt.Printf("Id: %v, Name: %s, Time: %v",
+					user.Id,
+					user.Name,
+					user.Time)
+			}
 		case "3":
 			return
 		default:
@@ -86,11 +95,6 @@ func play() domain.User {
 		Time: timeSpent,
 	}
 	id++
-
-	// var user domain.User
-	// user.Id = id
-	// user.Name = name
-	// user.Time = timeSpent
 
 	return user
 }
