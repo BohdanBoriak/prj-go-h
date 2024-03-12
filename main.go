@@ -22,11 +22,14 @@ func main() {
 	fmt.Println("Вітаємо у грі \"РОГАЛИКИ\"")
 	time.Sleep(1 * time.Second)
 
-	// users = append(users, domain.User{Id: 1, Name: "Vasyl", Time: 50 * time.Second})
-	// users = append(users, domain.User{Id: 2, Name: "Mykola", Time: 120 * time.Second})
-	// users = append(users, domain.User{Id: 3, Name: "Sokrat", Time: 32 * time.Second})
+	users := showRate()
+	for _, u := range users {
+		if u.Id > id {
+			id = u.Id
+		}
+	}
+	id++
 
-	// sortAndSave(users)
 	for {
 		menu()
 		punct := ""
@@ -42,7 +45,7 @@ func main() {
 			fmt.Println("Список гравців:")
 			users := showRate()
 			for _, user := range users {
-				fmt.Printf("Id: %v, Name: %s, Time: %v",
+				fmt.Printf("Id: %v, Name: %s, Time: %v\n",
 					user.Id,
 					user.Name,
 					user.Time)
@@ -140,8 +143,6 @@ func showRate() []domain.User {
 		fmt.Printf("Сталась помилка Т_Т: %s\n", err)
 		return nil
 	}
-
-	fmt.Println(info)
 
 	var users []domain.User
 	if info.Size() != 0 {
